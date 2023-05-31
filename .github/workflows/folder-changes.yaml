@@ -1,0 +1,26 @@
+name: Folder Changes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Find changed folders
+        id: find_changed_folders
+        run: |
+          echo "::set-output name=changed_folders::$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | cut -d/ -f1 | sort -u)"
+
+      - name: Pass folder names to CodePipeline
+        uses: aws-actions/aws-cli@v2
+        with:
+          args: codepipeline start-pipeline-execution --name Folder-changes-testing-pipeline --query 'pipelineExecutionId' --output text
+          env:
+            FOLDER_NAMES: '${{ steps.find_changed_folders.outputs.changed_folders }}
