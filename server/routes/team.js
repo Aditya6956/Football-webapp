@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const teamController = require('../controllers/teamController');
 
-// get the folder name
-
 router.get('/', teamController.view);
 router.post('/', teamController.find);
 router.get('/addteam', teamController.form);
