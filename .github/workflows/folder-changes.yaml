@@ -19,8 +19,11 @@ jobs:
           echo "::set-output name=changed_folders::$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | cut -d/ -f1 | sort -u)"
 
       - name: Pass folder names to CodePipeline
-        uses: aws-actions/aws-cli@v2
+        uses: aws-actions/configure-aws-credentials@v1
         with:
+          aws-access-key-id: 'AKIAQVE27LPWLWOETLIL'
+          aws-secret-access-key: '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'
+          aws-region: 'us-east-1'
           args: codepipeline start-pipeline-execution --name Folder-changes-testing-pipeline --query 'pipelineExecutionId' --output text
         env:
             FOLDER_NAMES: ${{ steps.find_changed_folders.outputs.changed_folders }}
