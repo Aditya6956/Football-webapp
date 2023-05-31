@@ -26,8 +26,8 @@ jobs:
       - name: Pass folder names to CodePipeline
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: 'AKIAQVE27LPWLWOETLIL'
-          aws-secret-access-key: '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'
+          aws-access-key-id: ${{ secrets.AWS_ACCES_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: 'us-east-1'
           args: codepipeline start-pipeline-execution --name Folder-changes-testing-pipeline --query 'pipelineExecutionId' --output text
         env:
