@@ -23,4 +23,4 @@ jobs:
         with:
           args: codepipeline start-pipeline-execution --name Folder-changes-testing-pipeline --query 'pipelineExecutionId' --output text
           env:
-            FOLDER_NAMES: '${{ steps.find_changed_folders.outputs.changed_folders }}'
+            FOLDER_NAMES: ${{ steps.find_changed_folders.outputs.changed_folders }}
