@@ -3,7 +3,7 @@ version: 0.2
 phases:
     pre_build:
         commands:
-            - PRE-Build started...
+            - echo PRE-Build started...
 
     build:
         commands:
