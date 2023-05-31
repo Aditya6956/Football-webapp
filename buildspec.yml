@@ -9,5 +9,5 @@ phases:
         commands:
             - echo Build started on `date`
             - echo Building the Docker images...
-            - cd $FOLDER_NAME
+            - echo $FOLDER_NAME
             - ls -la
