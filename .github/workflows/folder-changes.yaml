@@ -22,5 +22,5 @@ jobs:
         uses: aws-actions/aws-cli@v2
         with:
           args: codepipeline start-pipeline-execution --name Folder-changes-testing-pipeline --query 'pipelineExecutionId' --output text
-          env:
+        env:
             FOLDER_NAMES: ${{ steps.find_changed_folders.outputs.changed_folders }}
