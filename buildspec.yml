@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+    pre_build:
+        commands:
+            - PRE-Build started...
+
+    build:
+        commands:
+            - echo Build started on `date`
+            - echo Building the Docker images...
+            - cd $FOLDER_NAME
+            - ls -la
