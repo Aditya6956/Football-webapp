@@ -13,22 +13,23 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Find changed folders
-        id: find_changed_folders
-        run: |
-          echo "::set-output name=changed_folders::$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | cut -d/ -f1 | sort -u)"
-      
-      - name: Set folder names
-        id: set_folder_names
-        run: |
-          echo "FOLDER_NAMES=${{ steps.find_changed_folders.outputs.changed_folders }}" >> $GITHUB_ENV
-
-      - name: Pass folder names to CodePipeline
-        uses: aws-actions/configure-aws-credentials@v1
+      - uses: Stockopedia/action-get-changed-files@v1
+        id: get_changed
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCES_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: 'us-east-1'
-          args: codepipeline start-pipeline-execution --name Folder-changes-testing-pipeline --query 'pipelineExecutionId' --output text
-        env:
-            FOLDER_NAMES: ${{ steps.set_folder_names.outputs.FOLDER_NAMES }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          ignore: "**/+(.github)"
+          foldersOnly: false 
+          format: newline
+      
+      - name: Echo changed files
+        run: echo ${{ steps.get_changed.outputs.changed }}
+
+#       - name: Pass folder names to CodePipeline
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCES_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-region: 'us-east-1'
+#           args: codepipeline start-pipeline-execution --name Folder-changes-testing-pipeline --query 'pipelineExecutionId' --output text
+#         env:
+#             FOLDER_NAMES: ${{ steps.get_changed.outputs.changed }}
