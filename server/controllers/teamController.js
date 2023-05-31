@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-// Connection Pool To the MYSQL Local Database With Username and password
+// Connection Pool
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER, 
@@ -107,3 +107,5 @@ exports.viewall = (req, res) => {
   });
 
 }
+
+// End of File
